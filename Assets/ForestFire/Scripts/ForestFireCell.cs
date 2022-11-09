@@ -39,6 +39,8 @@ public class ForestFireCell : MonoBehaviour
     public GameObject playerCamera; // reference to player camera
     public float fireVFXDistance; // float to set the maximum distance a fire vfx will be rendered at. this is used to improve rendering performance. 
 
+    public Collider fireCollider;
+
     private VisualEffect _fireVisualEffect; // reference to the fire vfx on the current fire object.
 
     // Awake is a built-in Unity function that is only called once, before the Start function
@@ -50,6 +52,7 @@ public class ForestFireCell : MonoBehaviour
     // reset anything that was turned on by a different cell 
     private void ResetCell()
     {
+        fireCollider.enabled = false; 
         // turn off the tree and rock objects
         treeObject.SetActive(false);
         rockObject.SetActive(false);
@@ -133,6 +136,8 @@ public class ForestFireCell : MonoBehaviour
     {
         cellState = State.Alight;
 
+        fireCollider.enabled = true;
+
         // check if a fire has assigned 
         if (currentFire == null)
         {
@@ -157,6 +162,8 @@ public class ForestFireCell : MonoBehaviour
     // set cell burnt
     public void SetBurnt()
     {
+        fireCollider.enabled = false;
+
         // if the cell has a fire, destroy it
         if (currentFire != null)
         {
